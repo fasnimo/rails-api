@@ -10,10 +10,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_27_041940) do
+ActiveRecord::Schema.define(version: 2021_02_23_191217) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "players", force: :cascade do |t|
+    t.string "name"
+    t.integer "number"
+    t.string "position"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "team_ownerships", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "player_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["player_id"], name: "index_team_ownerships_on_player_id"
+    t.index ["user_id"], name: "index_team_ownerships_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email"
@@ -22,4 +39,6 @@ ActiveRecord::Schema.define(version: 2020_12_27_041940) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "team_ownerships", "players"
+  add_foreign_key "team_ownerships", "users"
 end

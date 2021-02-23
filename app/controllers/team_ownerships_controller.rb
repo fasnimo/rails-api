@@ -1,2 +1,0 @@
-class TeamOwnershipsController < ApplicationController
-end
